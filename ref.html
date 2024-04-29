@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Cloud</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    #image-cloud {
+        position: relative;
+        width: 50%;
+        height: 50vh;
+    }
+
+    .image {
+        position: absolute;
+        max-width: 100px;
+        max-height: 100px;
+        opacity: 0.7;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .image:hover {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+</style>
+</head>
+<body>
+<div id="image-cloud"></div>
+
+<script>
+    // Sample image URLs
+    const imageUrls = [
+        'css.png',
+        'git.png',
+        'html.png',
+        'image1.jpg',
+        'image2.jpg',
+        'image3.jpg'
+        // Add more image URLs as needed
+    ];
+
+    // Function to create image elements and append them to the image cloud
+    function createImageCloud() {
+        const imageCloud = document.getElementById('image-cloud');
+
+        imageUrls.forEach((url, index) => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.classList.add('image');
+            img.style.left = `${Math.random() * 90}%`; // Random left position
+            img.style.top = `${Math.random() * 90}%`; // Random top position
+            img.style.zIndex = index; // Adjust z-index for layering
+            imageCloud.appendChild(img);
+        });
+    }
+
+    // Call the function to create the image cloud
+    createImageCloud();
+</script>
+</body>
+</html>
