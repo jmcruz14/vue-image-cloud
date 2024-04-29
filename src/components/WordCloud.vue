@@ -8,7 +8,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import useWordCloud from '../composables/use-word-cloud'
+import useImageCloud from '../composables/use-word-cloud'
 
 export default {
   props: {
@@ -27,7 +27,7 @@ export default {
     const imageCloud = ref(null);
     const imageEls = ref([])
     const existingPositions = ref([]);
-    const { collisionCheck } = useWordCloud()
+    const { collisionCheck } = useImageCloud()
 
     onMounted(() => {
       imageEls.value = props.imageUrls.map((url, index) => {
