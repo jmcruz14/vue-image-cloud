@@ -8,7 +8,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import useImageCloud from '../composables/use-word-cloud'
+import useImageCloud from '../composables/use-image-cloud'
 
 export default {
   props: {
