@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Vue 3 component for creating image cloud elements.",
   "author": "Jay Cruz",
+  "license": "MIT",
   "type": "module",
   "files": [
     "dist"
