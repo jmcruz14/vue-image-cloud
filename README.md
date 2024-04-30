@@ -2,6 +2,9 @@
 
 A Vue component for creating word cloud images for your Vue app.
 
+> [!WARNING] 
+> This package is currently undergoing testing and is not yet declared stable!
+
 ## Installation
 
 ```Shell
