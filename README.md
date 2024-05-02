@@ -1,6 +1,6 @@
-# Vue Word Cloud
+# Vue Image Cloud
 
-A Vue component for creating word cloud images for your Vue app.
+A Vue component for creating an image cloud for your Vue app.
 
 > [!WARNING] 
 > This package is currently undergoing testing and is not yet declared stable!
@@ -8,7 +8,7 @@ A Vue component for creating word cloud images for your Vue app.
 ## Installation
 
 ```Shell
-yarn add vue-word-cloud
+yarn add vue-image-cloud
 ```
 
 <hr>
