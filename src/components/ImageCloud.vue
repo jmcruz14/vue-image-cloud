@@ -8,11 +8,14 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import useImageCloud from '../composables/use-image-cloud'
+import useImageCloud from '../composables/use-image-cloud.js'
 
 export default {
   props: {
-    imageUrls: Object,
+    imageUrls: {
+      type: Object,
+      default: () => []
+    },
     leftMultiplier: {
       type: Object,
       default: 80
