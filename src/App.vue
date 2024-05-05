@@ -1,7 +1,7 @@
 
 <template>
   <h1>Word Cloud Component</h1>
-  <WordCloud 
+  <ImageCloud 
     :imageUrls="imageUrls"
     :left-multiplier="80"
     :top-multiplier="40"
@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import WordCloud from './components/WordCloud.vue'
+import ImageCloud from './components/ImageCloud.vue'
 
 // source is not resolved with the alias
 const imageUrls = ref([
