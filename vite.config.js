@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.js'),
+      entry: path.resolve(__dirname, 'src/main.js'),
       name: 'vue-image-cloud',
       fileName: (format) => `vue-image-cloud.${format}.js`
     },
