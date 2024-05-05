@@ -1,6 +1,6 @@
 {
   "name": "vue-image-cloud",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Vue 3 component for creating image cloud elements.",
   "author": "Jay Cruz",
   "license": "MIT",
@@ -22,10 +22,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.2.0"
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
   }
 }
