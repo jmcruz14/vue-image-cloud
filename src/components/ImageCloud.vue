@@ -17,11 +17,11 @@ export default {
       default: () => []
     },
     leftMultiplier: {
-      type: Object,
+      type: Number,
       default: 80
     },
     topMultiplier: {
-      type: Object,
+      type: Number,
       default: 80
     },
     // showName: Boolean,
