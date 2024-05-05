@@ -11,6 +11,28 @@ A Vue component for creating an image cloud for your Vue app.
 yarn add vue-image-cloud
 ```
 
+## Instructions
+
+In any Vue file, use the following syntax
+
+```JS
+<script>
+import { ImageCloud } from 'vue-image-cloud'
+
+export default {
+  ...,
+  components: {
+    ImageCloud
+  },
+  ...
+}
+</script>
+
+<template>
+  <ImageCloud />
+</template>
+```
+
 <hr>
 
 # Vue 3 + Vite
