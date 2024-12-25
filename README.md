@@ -2,11 +2,17 @@
 
 A Vue component for creating an image cloud for your Vue app.
 
-> [!WARNING] 
-> This package is currently undergoing testing and is not yet declared stable!
+> [!NOTE] 
+> This package is currently 
 
 ## Installation
 
+### npm
+```Shell
+npm install vue-image-cloud
+```
+
+### yarn 
 ```Shell
 yarn add vue-image-cloud
 ```
