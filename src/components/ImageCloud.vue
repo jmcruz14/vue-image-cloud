@@ -1,19 +1,23 @@
 <template>
   <div ref="imageCloud" id="image-cloud">
     <template v-for="(image, index) in imageEls" :key="index">
-      <img :src="image.src" :class="image.classList.value" :style="image.style.cssText">
+      <img 
+        :src="image.src" 
+        :class="image.classList.value" 
+        :style="image.style.cssText"
+      >
     </template>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import useImageCloud from '../composables/use-image-cloud.js'
 
 export default {
   props: {
     imageUrls: {
-      type: Object,
+      type: Array,
       default: () => []
     },
     leftMultiplier: {
@@ -24,38 +28,111 @@ export default {
       type: Number,
       default: 80
     },
-    // showName: Boolean,
+    hitboxSize: {
+      type: Number,
+      default: 20  // Percentage-based hitbox size
+    },
+    maxAttempts: {
+      type: Number,
+      default: 50  // Maximum attempts to find a non-colliding position
+    },
+    // Scale factor for images
+    minScale: {
+      type: Number,
+      default: 0.5  // Minimum scale factor for images
+    },
+    initialScale: {
+      type: Number,
+      default: 1.0  // Starting scale for images
+    },
+    scaleStep: {
+      type: Number,
+      default: 0.1  // How much to reduce scale on each attempt
+    }
   },
-  setup (props, { emit }) {
+  
+  setup(props, { emit }) {
     const imageCloud = ref(null);
-    const imageEls = ref([])
+    const imageEls = ref([]);
     const existingPositions = ref([]);
-    const { collisionCheck } = useImageCloud()
+    const { collisionCheck } = useImageCloud();
+    
+    const loadedImages = ref(new Set());
+    const currentScale = ref(props.initialScale);
+
+    const findValidImagePosition = (attempts = 0) => {
+      if (attempts >= props.maxAttempts) {
+        // Fallback position if we can't find a valid spot
+        return {
+          left: Math.random() * props.leftMultiplier,
+          top: Math.random() * props.topMultiplier
+        };
+      }
+
+      const left = Math.random() * props.leftMultiplier;
+      const top = Math.random() * props.topMultiplier;
+
+      // Check for collisions with existing positions
+      if (!collisionCheck(left, top, existingPositions.value, props.hitboxSize)) {
+        return { left, top };
+      }
+
+      // Recursively try to find a valid position
+      return findValidImagePosition(attempts + 1);
+    };
+
+    const createImageElement = (url, index) => {
+      const position = findValidImagePosition();
+      
+      // Store the position for future collision checks
+      existingPositions.value.push({
+        left: position.left,
+        top: position.top
+      });
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.classList.add('image');
+      img.style.left = `${position.left}%`;
+      img.style.top = `${position.top}%`;
+      img.style.zIndex = index;
+      img.style.position = 'absolute'; // Ensure absolute positioning
+      
+      // Optional: Add hover effect
+      img.addEventListener('mouseover', () => {
+        img.style.transform = 'scale(1.1)';
+        img.style.zIndex = '999'; // Bring to front on hover
+      });
+      
+      img.addEventListener('mouseout', () => {
+        img.style.transform = 'scale(1)';
+        img.style.zIndex = index.toString();
+      });
+
+      return img;
+    };
+
+    // Watch for changes in imageUrls
+    watch(() => props.imageUrls, (newUrls) => {
+      if (newUrls && newUrls.length > 0) {
+        existingPositions.value = []; // Reset positions
+        imageEls.value = newUrls.map((url, index) => createImageElement(url, index));
+      }
+    }, { immediate: true });
 
     onMounted(() => {
-      imageEls.value = props.imageUrls.map((url, index) => {
-        const leftVal = ref(null)
-        const topVal = ref(null)
-        leftVal.value = Math.random() * props.leftMultiplier; // Adjusted to account for image width
-        topVal.value = Math.random() * props.topMultiplier; // Adjusted to account for image height
-        // do {
-        //   leftVal.value = Math.random() * props.leftMultiplier; // Adjusted to account for image width
-        //   topVal.value = Math.random() * props.topMultiplier; // Adjusted to account for image height
-        // } while (collisionCheck(leftVal.value, topVal.value, existingPositions.value));
-        // existingPositions.value.push({ left: leftVal.value, top: topVal.value })
-  
-        const img = document.createElement('img');
-        img.src = url;
-        img.classList.add('image');
-        img.style.left = `${leftVal.value}%`; // Random left position
-        img.style.top = `${topVal.value}%`; // Random top position
-        img.style.zIndex = index; // Adjust z-index for layering
-        return img
-      })
-      // console.warn(imageEls.value)
-    })
+      if (props.imageUrls && props.imageUrls.length > 0) {
+        existingPositions.value = []; // Reset positions
+        imageEls.value = props.imageUrls.map((url, index) => createImageElement(url, index));
+      }
+    });
 
-    
+    // Optional: Cleanup function
+    onUnmounted(() => {
+      imageEls.value = [];
+      existingPositions.value = [];
+    });
+
     return {
       imageCloud,
       imageEls
@@ -63,6 +140,7 @@ export default {
   }
 }
 </script>
+
 
 <style>
 #image-cloud {
