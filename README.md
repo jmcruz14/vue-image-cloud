@@ -3,7 +3,7 @@
 A Vue component for creating an image cloud for your Vue app.
 
 > [!NOTE] 
-> This package is currently 
+> This package is currently undergoing additional testing, but the algorithm in place is currently effective for its main feature: distributing images within a bounded box.
 
 ## Installation
 
